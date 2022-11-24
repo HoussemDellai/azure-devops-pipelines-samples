@@ -5,26 +5,6 @@ trigger: none
 stages:
 - stage: Test
   jobs:
-  - job:
-    strategy:
-      matrix:
-        WindowsServer2022:
-          imageName: 'windows-2022'
-        WindowsServer2019:
-          imageName: 'windows-2019'
-        ubuntu-22-04:
-          imageName: 'ubuntu-22.04'
-        ubuntu-20-04:
-          imageName: 'ubuntu-20.04'
-        macos-12-monterey:
-          imageName: 'macOS-12'
-        macos-11-bigsur:
-          imageName: 'macOS-11'
-      maxParallel: 6
-    pool:
-      vmImage: $(imageName)
-    steps:
-    - script: echo $(imageName)
 
   - job: Build
     strategy:
@@ -36,6 +16,34 @@ stages:
         Python37:
           PYTHON_VERSION: '3.7'
       maxParallel: 3
-
     steps:
     - script: echo $(PYTHON_VERSION)
+
+  - job: Test
+    strategy:
+      matrix:
+        WindowsServer2022:
+          imageName: 'windows-2022'
+          script: 'dir env:'
+        WindowsServer2019:
+          imageName: 'windows-2019'
+          script: 'dir env:'
+        ubuntu-22-04:
+          imageName: 'ubuntu-22.04'
+          script: 'printenv'
+        ubuntu-20-04:
+          imageName: 'ubuntu-20.04'
+          script: 'printenv'
+        macos-12-monterey:
+          imageName: 'macOS-12'
+          script: 'printenv'
+        macos-11-bigsur:
+          imageName: 'macOS-11'
+          script: 'printenv'
+      maxParallel: 6
+    pool:
+      vmImage: $(imageName)
+    steps:
+    - script: |
+        echo $(imageName)
+        echo $(script)
