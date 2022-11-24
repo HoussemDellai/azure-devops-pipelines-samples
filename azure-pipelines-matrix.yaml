@@ -9,13 +9,13 @@ stages:
     strategy:
       matrix:
         Linux:
-          imageName: 'ubuntu-16.04'
+          imageName: 'ubuntu-18.04'
         Mac:
-          imageName: 'macOS-10.14'
+          imageName: 'macOS-10.16'
         Windows:
           imageName: 'windows-2019'
         Code Coverage:
-          imageName: 'windows-2019'
+          imageName: 'windows-2022'
         Script Analysis:
           imageName: 'windows-2019'
       maxParallel: 2
@@ -25,7 +25,6 @@ stages:
     - powershell: |
         "OS = $($env:AGENT_OS)" | Out-Host
       displayName: 'Dummy Test Step'
-
 
   - job: Build
     strategy:
