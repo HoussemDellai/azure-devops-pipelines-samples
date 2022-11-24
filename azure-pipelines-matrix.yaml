@@ -1,0 +1,40 @@
+name: Azure DevOps Pipelines - Matrix Strategy
+
+trigger: none
+
+stages:
+- stage: Test
+  dependsOn: Build
+  jobs:
+  - job:
+    strategy:
+      matrix:
+        Linux:
+          imageName: 'ubuntu-16.04'
+        Mac:
+          imageName: 'macOS-10.14'
+        Windows:
+          imageName: 'windows-2019'
+        Code Coverage:
+          imageName: 'windows-2019'
+        Script Analysis:
+          imageName: 'windows-2019'
+      maxParallel: 2
+    pool:
+      vmImage: $(imageName)
+    steps:
+    - powershell: |
+        "OS = $($env:AGENT_OS)" | Out-Host
+      displayName: 'Dummy Test Step'
+
+
+  - job: Build
+    strategy:
+      matrix:
+        Python35:
+          PYTHON_VERSION: '3.5'
+        Python36:
+          PYTHON_VERSION: '3.6'
+        Python37:
+          PYTHON_VERSION: '3.7'
+      maxParallel: 2
