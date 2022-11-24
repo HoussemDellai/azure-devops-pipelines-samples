@@ -4,7 +4,6 @@ trigger: none
 
 stages:
 - stage: Test
-  dependsOn: Build
   jobs:
   - job:
     strategy:
