@@ -8,23 +8,23 @@ stages:
   - job:
     strategy:
       matrix:
-        Linux:
-          imageName: 'ubuntu-18.04'
-        Mac:
-          imageName: 'macOS-10.16'
-        Windows:
-          imageName: 'windows-2019'
-        Code Coverage:
+        WindowsServer2022:
           imageName: 'windows-2022'
-        Script Analysis:
+        WindowsServer2019:
           imageName: 'windows-2019'
-      maxParallel: 2
+        ubuntu-22-04:
+          imageName: 'ubuntu-22.04'
+        ubuntu-20-04:
+          imageName: 'ubuntu-20.04'
+        macos-12-monterey:
+          imageName: 'macOS-12'
+        macos-11-bigsur:
+          imageName: 'macOS-11'
+      maxParallel: 6
     pool:
       vmImage: $(imageName)
     steps:
-    - powershell: |
-        "OS = $($env:AGENT_OS)" | Out-Host
-      displayName: 'Dummy Test Step'
+    - script: echo $(imageName)
 
   - job: Build
     strategy:
@@ -35,4 +35,7 @@ stages:
           PYTHON_VERSION: '3.6'
         Python37:
           PYTHON_VERSION: '3.7'
-      maxParallel: 2
+      maxParallel: 3
+
+    steps:
+    - script: echo $(PYTHON_VERSION)
