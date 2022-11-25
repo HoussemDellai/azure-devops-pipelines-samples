@@ -26,10 +26,10 @@ stages:
       matrix:
         WindowsServer2022:
           imageName: 'windows-2022'
-          script: 'dir env:'
+          script: 'set'
         WindowsServer2019:
           imageName: 'windows-2019'
-          script: 'dir env:'
+          script: 'set'
         ubuntu-22-04:
           imageName: 'ubuntu-22.04'
           script: 'printenv'
@@ -48,6 +48,6 @@ stages:
     steps:
     - script: |
         echo $(imageName)
-        Get-ChildItem Env: | Format-Table -Wrap -AutoSize
+        # Get-ChildItem Env: | Format-Table -Wrap -AutoSize
         # dir env:
         $(script)
