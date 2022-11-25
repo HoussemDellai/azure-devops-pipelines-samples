@@ -3,7 +3,7 @@ name: Azure DevOps Pipelines - Matrix Strategy
 trigger: none
 
 stages:
-- stage: Test
+- stage: BuildStage
   jobs:
 
   - job: Build
@@ -19,6 +19,8 @@ stages:
     steps:
     - script: echo $(PYTHON_VERSION)
 
+- stage: Test_STAGE
+  jobs:
   - job: Test
     strategy:
       matrix:
@@ -46,4 +48,4 @@ stages:
     steps:
     - script: |
         echo $(imageName)
-        echo $(script)
+        $(script)
