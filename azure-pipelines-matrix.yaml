@@ -3,7 +3,7 @@ name: Azure DevOps Pipelines - Matrix Strategy
 trigger: none
 
 stages:
-- stage: BuildStage
+- stage: Build_Stage
   jobs:
 
   - job: Build
@@ -20,7 +20,7 @@ stages:
     - checkout: none
     - script: echo $(PYTHON_VERSION)
 
-- stage: Test_STAGE
+- stage: Test_Stage
   jobs:
   - job: Test
     strategy:
@@ -51,3 +51,24 @@ stages:
     - script: |
         echo $(imageName)
         $(script)
+
+- stage: Prod_Stage
+  jobs:
+  - job: Prod
+    strategy:
+      matrix:
+        Deploy_Prod_EastEurope:
+          location: 'East-europe'
+        Deploy_Prod_WestEurope:
+          location: 'west-europe'
+        Deploy_Prod_EastUS:
+          location: 'east-us'
+        Deploy_Prod_WestUS:
+          location: 'west-us'
+      maxParallel: 1
+    pool:
+      vmImage: 'ubuntu-22.04'
+    steps:
+    - checkout: none
+    - script: |
+        echo 'Started deploying app to region $(location)...'
