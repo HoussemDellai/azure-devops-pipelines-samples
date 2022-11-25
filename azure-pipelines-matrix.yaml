@@ -48,5 +48,6 @@ stages:
     steps:
     - script: |
         echo $(imageName)
-        dir env:
+        Get-ChildItem Env: | Format-Table -Wrap -AutoSize
+        # dir env:
         $(script)
