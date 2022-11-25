@@ -3,9 +3,9 @@ name: Azure DevOps Pipelines - Matrix Strategy
 trigger: none
 
 stages:
-- stage: Test
-  dependsOn: Build
+- stage: BuildStage
   jobs:
+<<<<<<< HEAD
   - job:
     strategy:
       matrix:
@@ -26,6 +26,8 @@ stages:
     - powershell: |
         "OS = $($env:AGENT_OS)" | Out-Host
       displayName: 'Dummy Test Step'
+=======
+>>>>>>> de7ad679b3a36a6d7b39b4ddb588b2d049130c2f
 
   - job: Build
     strategy:
@@ -36,4 +38,37 @@ stages:
           PYTHON_VERSION: '3.6'
         Python37:
           PYTHON_VERSION: '3.7'
-      maxParallel: 2
+      maxParallel: 3
+    steps:
+    - script: echo $(PYTHON_VERSION)
+
+- stage: Test_STAGE
+  jobs:
+  - job: Test
+    strategy:
+      matrix:
+        WindowsServer2022:
+          imageName: 'windows-2022'
+          script: 'dir env:'
+        WindowsServer2019:
+          imageName: 'windows-2019'
+          script: 'dir env:'
+        ubuntu-22-04:
+          imageName: 'ubuntu-22.04'
+          script: 'printenv'
+        ubuntu-20-04:
+          imageName: 'ubuntu-20.04'
+          script: 'printenv'
+        macos-12-monterey:
+          imageName: 'macOS-12'
+          script: 'printenv'
+        macos-11-bigsur:
+          imageName: 'macOS-11'
+          script: 'printenv'
+      maxParallel: 6
+    pool:
+      vmImage: $(imageName)
+    steps:
+    - script: |
+        echo $(imageName)
+        $(script)
