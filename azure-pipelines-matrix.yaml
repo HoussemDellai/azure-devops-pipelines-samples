@@ -17,6 +17,7 @@ stages:
           PYTHON_VERSION: '3.7'
       maxParallel: 3
     steps:
+    - checkout: none
     - script: echo $(PYTHON_VERSION)
 
 - stage: Test_STAGE
@@ -46,6 +47,7 @@ stages:
     pool:
       vmImage: $(imageName)
     steps:
+    - checkout: none
     - script: |
         echo $(imageName)
         $(script)
