@@ -27,7 +27,6 @@ stages:
         "OS = $($env:AGENT_OS)" | Out-Host
       displayName: 'Dummy Test Step'
 
-
   - job: Build
     strategy:
       matrix:

@@ -1,0 +1,20 @@
+trigger: none
+
+parameters:
+- name: branchOptions
+  displayName: Source branch options
+  type: object
+  default:
+    - refs/heads/main
+    - refs/heads/test
+
+jobs:
+- job: A1 
+  steps:
+  - ${{ each value in parameters.branchOptions }}:
+    - script: echo ${{ value }}
+
+- job: B1 
+  condition: ${{ containsValue(parameters.branchOptions, variables['Build.SourceBranch']) }}
+  steps:
+    - script: echo "Matching branch found"
