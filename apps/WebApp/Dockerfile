@@ -7,19 +7,19 @@ EXPOSE 8080
 EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["WebApp.csproj", "."]
-RUN dotnet restore "./././WebApp.csproj"
-COPY . .
-WORKDIR "/src/."
-RUN dotnet build "./WebApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
+# ARG BUILD_CONFIGURATION=Release
+# WORKDIR /src
+# COPY ["WebApp.csproj", "."]
+# RUN dotnet restore "./././WebApp.csproj"
+# COPY . .
+# WORKDIR "/src/."
+# RUN dotnet build "./WebApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./WebApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+# FROM build AS publish
+# ARG BUILD_CONFIGURATION=Release
+# RUN dotnet publish "./WebApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebApp.dll"]
+# FROM base AS final
+# WORKDIR /app
+# COPY --from=publish /app/publish .
+# ENTRYPOINT ["dotnet", "WebApp.dll"]
