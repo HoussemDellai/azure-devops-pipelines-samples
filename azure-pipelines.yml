@@ -42,6 +42,7 @@ steps:
   - script: |
       mkdir -p $(Pipeline.Workspace)/docker
       docker save -o $(Pipeline.Workspace)/docker/cache.tar $(repository):$(tag)
+      docker pull mcr.microsoft.com/dotnet/sdk:8.0 || true
       docker save -o $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar mcr.microsoft.com/dotnet/sdk:8.0
     displayName: Docker save
     # condition: and(not(canceled()), not(failed()), ne(variables.CACHE_RESTORED, 'true'))
