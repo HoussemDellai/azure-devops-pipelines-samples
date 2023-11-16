@@ -20,7 +20,7 @@ steps:
   - script: |
       ls $(Pipeline.Workspace)/docker/
       docker load -i $(Pipeline.Workspace)/docker/cache.tar
-      docker load -i $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar
+      # docker load -i $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar
     displayName: Docker restore
     condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
 
@@ -43,8 +43,8 @@ steps:
   - script: |
       mkdir -p $(Pipeline.Workspace)/docker
       docker save -o $(Pipeline.Workspace)/docker/cache.tar $(repository):$(tag)
-      docker pull mcr.microsoft.com/dotnet/sdk:8.0 || true
-      docker save -o $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar "mcr.microsoft.com/dotnet/sdk:8.0"
+      # docker pull mcr.microsoft.com/dotnet/sdk:8.0 || true
+      # docker save -o $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar "mcr.microsoft.com/dotnet/sdk:8.0"
     displayName: Docker save
     # condition: and(not(canceled()), not(failed()), ne(variables.CACHE_RESTORED, 'true'))
 
