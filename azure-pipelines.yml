@@ -10,24 +10,24 @@ variables:
   tag: $(Build.BuildId)
 
 steps:
-  # - task: Cache@2
-  #   displayName: Cache task
-  #   inputs:
-  #     key: 'docker | "$(Agent.OS)" | cache'
-  #     path: $(Pipeline.Workspace)/docker
-  #     cacheHitVar: CACHE_RESTORED #Variable to set to 'true' when the cache is restored
-
-  # - script: |
-  #     docker load -i $(Pipeline.Workspace)/docker/cache.tar
-  #   displayName: Docker restore
-  #   condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
+  - task: Cache@2
+    displayName: Cache task
+    inputs:
+      key: 'docker | "$(Agent.OS)" | cache'
+      path: $(Pipeline.Workspace)/docker
+      cacheHitVar: CACHE_RESTORED #Variable to set to 'true' when the cache is restored
 
   - script: |
-      date
-      docker pull mcr.microsoft.com/dotnet/aspnet:8.0
-      docker pull mcr.microsoft.com/dotnet/sdk:8.0
-      date
-    displayName: Docker pull
+      docker load -i $(Pipeline.Workspace)/docker/cache.tar
+    displayName: Docker restore
+    condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
+
+  # - script: |
+  #     date
+  #     docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+  #     docker pull mcr.microsoft.com/dotnet/sdk:8.0
+  #     date
+  #   displayName: Docker pull
 
   - task: Docker@2
     displayName: "Build Docker"
@@ -37,6 +37,13 @@ steps:
       dockerfile: $(dockerfilePath)
       tags: |
         $(tag)
+
+  - script: |
+      mkdir -p $(Pipeline.Workspace)/docker
+      docker save -o $(Pipeline.Workspace)/docker/cache.tar $(repository):$(tag)
+      docker save -o $(Pipeline.Workspace)/docker/cache.tar mcr.microsoft.com/dotnet/sdk:8.0
+    displayName: Docker save
+    condition: and(not(canceled()), not(failed()), ne(variables.CACHE_RESTORED, 'true'))
 
   # - script: |
   #     mkdir -p $(Pipeline.Workspace)/docker
