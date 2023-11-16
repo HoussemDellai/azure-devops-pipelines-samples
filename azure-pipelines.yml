@@ -6,7 +6,7 @@ pool:
 
 variables:
   repository: "myimage"
-  dockerfilePath: "$(Build.SourcesDirectory)/apps/WebApp/Dockerfile"
+  dockerfilePath: "$(Build.SourcesDirectory)/Dockerfile"
   tag: $(Build.BuildId)
 
 steps:
