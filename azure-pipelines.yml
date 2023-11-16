@@ -22,12 +22,12 @@ steps:
     displayName: Docker restore
     condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
 
-  - script: |
-      date
-      docker pull mcr.microsoft.com/dotnet/aspnet:8.0
-      docker pull mcr.microsoft.com/dotnet/sdk:8.0
-      date
-    displayName: Docker pull
+  # - script: |
+  #     date
+  #     docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+  #     docker pull mcr.microsoft.com/dotnet/sdk:8.0
+  #     date
+  #   displayName: Docker pull
 
   - task: Docker@2
     displayName: "Build Docker"
