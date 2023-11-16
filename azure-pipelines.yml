@@ -19,6 +19,7 @@ steps:
 
   - script: |
       docker load -i $(Pipeline.Workspace)/docker/cache.tar
+      docker load -i $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar
     displayName: Docker restore
     condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
 
@@ -28,29 +29,21 @@ steps:
   #     docker pull mcr.microsoft.com/dotnet/sdk:8.0
   #     date
   #   displayName: Docker pull
-  
-  # - script: |
-  #     docker build -t $(repository):$(tag) -f $(dockerfilePath) .
-  #   displayName: Docker build
 
-  # # - task: Docker@2
-  # #   displayName: "Build Docker"
-  # #   inputs:
-  # #     command: "build"
-  # #     repository: $(repository)
-  # #     dockerfile: $(dockerfilePath)
-  # #     tags: |
-  # #       $(tag)
+  - task: Docker@2
+    displayName: "Build Docker"
+    inputs:
+      command: "build"
+      repository: $(repository)
+      dockerfile: $(dockerfilePath)
+      tags: |
+        $(tag)
 
   - script: |
-      docker build -t $(repository):$(tag) -f $(dockerfilePath) .
-      
-      docker images list
       mkdir -p $(Pipeline.Workspace)/docker
       docker save -o $(Pipeline.Workspace)/docker/cache.tar $(repository):$(tag)
-      docker save -o $(Pipeline.Workspace)/docker/cache.tar mcr.microsoft.com/dotnet/sdk:8.0
+      docker save -o $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar mcr.microsoft.com/dotnet/sdk:8.0
     displayName: Docker save
-    condition: and(not(canceled()), not(failed()), eq(variables.CACHE_RESTORED, 'true'))
     # condition: and(not(canceled()), not(failed()), ne(variables.CACHE_RESTORED, 'true'))
 
   # - script: |
