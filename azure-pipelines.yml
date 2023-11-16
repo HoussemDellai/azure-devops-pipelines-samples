@@ -39,6 +39,7 @@ steps:
         $(tag)
 
   - script: |
+      docker images list
       mkdir -p $(Pipeline.Workspace)/docker
       docker save -o $(Pipeline.Workspace)/docker/cache.tar $(repository):$(tag)
       docker save -o $(Pipeline.Workspace)/docker/cache.tar mcr.microsoft.com/dotnet/sdk:8.0
