@@ -28,17 +28,23 @@ steps:
   #     docker pull mcr.microsoft.com/dotnet/sdk:8.0
   #     date
   #   displayName: Docker pull
+  
+  # - script: |
+  #     docker build -t $(repository):$(tag) -f $(dockerfilePath) .
+  #   displayName: Docker build
 
-  - task: Docker@2
-    displayName: "Build Docker"
-    inputs:
-      command: "build"
-      repository: $(repository)
-      dockerfile: $(dockerfilePath)
-      tags: |
-        $(tag)
+  # # - task: Docker@2
+  # #   displayName: "Build Docker"
+  # #   inputs:
+  # #     command: "build"
+  # #     repository: $(repository)
+  # #     dockerfile: $(dockerfilePath)
+  # #     tags: |
+  # #       $(tag)
 
   - script: |
+      docker build -t $(repository):$(tag) -f $(dockerfilePath) .
+      
       docker images list
       mkdir -p $(Pipeline.Workspace)/docker
       docker save -o $(Pipeline.Workspace)/docker/cache.tar $(repository):$(tag)
