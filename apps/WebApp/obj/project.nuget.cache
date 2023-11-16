@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dsgS2Xqos+RxtR70KoNKa+B03soOfHA1qgwMTYHrPPuYlhCcNK4OOIhwTLgi5SWAzbQ6ah63GfiUE6zgBT6+Ng==",
+  "dgSpecHash": "VUe3gnOAFAz1OiFDQBIU9oiejjtVPZdbW2GKGk44XDzFvSgOgYu7LKS9Nv1ytGT3Tw/8VUBF1X8LJUliMoRpaA==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\azure-devops-pipelines-samples\\app-dotnet-8\\WebApp\\WebApp.csproj",
+  "projectFilePath": "D:\\Projects\\azure-devops-pipelines-samples\\apps\\WebApp\\WebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hodellai\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\hodellai\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

@@ -5,8 +5,8 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  repository: 'myimage'
-  dockerfilePath: '$(Build.SourcesDirectory)/apps/WebApp/Dockerfile'
+  repository: "myimage"
+  dockerfilePath: "$(Build.SourcesDirectory)/apps/WebApp/Dockerfile"
   tag: $(Build.BuildId)
 
 steps:
@@ -15,17 +15,21 @@ steps:
     inputs:
       key: 'docker | "$(Agent.OS)" | cache'
       path: $(Pipeline.Workspace)/docker
-      cacheHitVar: CACHE_RESTORED                #Variable to set to 'true' when the cache is restored
-    
+      cacheHitVar: CACHE_RESTORED #Variable to set to 'true' when the cache is restored
+
   - script: |
       docker load -i $(Pipeline.Workspace)/docker/cache.tar
     displayName: Docker restore
     condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
 
+  - script: |
+      docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+      docker pull mcr.microsoft.com/dotnet/sdk:8.0
+
   - task: Docker@2
-    displayName: 'Build Docker'
+    displayName: "Build Docker"
     inputs:
-      command: 'build'
+      command: "build"
       repository: $(repository)
       dockerfile: $(dockerfilePath)
       tags: |

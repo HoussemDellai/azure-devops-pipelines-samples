@@ -8087,11 +8087,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\azure-devops-pipelines-samples\\app-dotnet-8\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "D:\\Projects\\azure-devops-pipelines-samples\\apps\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "D:\\Projects\\azure-devops-pipelines-samples\\app-dotnet-8\\WebApp\\WebApp.csproj",
+      "projectPath": "D:\\Projects\\azure-devops-pipelines-samples\\apps\\WebApp\\WebApp.csproj",
       "packagesPath": "C:\\Users\\hodellai\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\azure-devops-pipelines-samples\\app-dotnet-8\\WebApp\\obj\\",
+      "outputPath": "D:\\Projects\\azure-devops-pipelines-samples\\apps\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hodellai\\AppData\\Roaming\\NuGet\\NuGet.Config",
