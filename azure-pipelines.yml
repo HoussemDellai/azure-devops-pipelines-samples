@@ -20,7 +20,7 @@ steps:
   - script: |
       ls $(Pipeline.Workspace)/docker/
       docker load -i $(Pipeline.Workspace)/docker/cache.tar
-      docker load -i $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar
+      # docker load -i $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar
     displayName: Docker restore
     condition: and(not(canceled()), eq(variables.CACHE_RESTORED, 'true'))
 
