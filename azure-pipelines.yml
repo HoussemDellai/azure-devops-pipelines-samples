@@ -18,6 +18,7 @@ steps:
       cacheHitVar: CACHE_RESTORED #Variable to set to 'true' when the cache is restored
 
   - script: |
+      ls $(Pipeline.Workspace)/docker/
       docker load -i $(Pipeline.Workspace)/docker/cache.tar
       docker load -i $(Pipeline.Workspace)/docker/cache-dotnet-sdk.tar
     displayName: Docker restore
